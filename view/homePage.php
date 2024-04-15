@@ -1,6 +1,8 @@
 <?php
 session_start();
 ob_start();
+$films = $query->fetchAll();
+$upcomingFilms = $query2->fetchAll();
 $title='DOMOVIES';
 
 ?>
@@ -16,7 +18,7 @@ foreach ($films as $film):
 			<img class="slide-img-cover" src="<?php echo $film['film_cover']; ?>"></div>
 			
       <div class="seeMoreBtn">
-          <a href="film.php?id=<?php echo $film['id_film'];?>"><button class="seeMoreBtn">See More</button></a>
+          <a href="index.php?action=filmPage&id=<?php echo $film['id_film']; ?>"><button class="seeMoreBtn">See More</button></a>
       </div>
 			<div class="slide-img-div">
 				<img class="slide-img" src="<?php echo $film['film_back_img']; ?>">
@@ -188,6 +190,6 @@ extractDominantColor("<?php echo $film['film_back_img']; ?>");
 </script>
 
 <?php
-$homePage=ob_get_clean();
-require("template.php");
+$content=ob_get_clean();
+require("view/template.php");
 ?>

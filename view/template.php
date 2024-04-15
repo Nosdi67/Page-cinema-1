@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="style/style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="public/style/style.css?v=<?php echo time(); ?>">
     <link rel="script" href="script/script.js?v=<?php echo time(); ?>">
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -16,11 +16,11 @@
         <header>
             <nav>
                     <div>
-                        <a href="homePage.php"><img src="image/DOMOVIES croped.png" alt="Logo du site DOMOVIES"></a>
+                        <a href="index.php?action=homePage"><img src="image/DOMOVIES croped.png" alt="Logo du site DOMOVIES"></a>
                     </div>
 
                     <ul>
-                        <li><a href="AllMovies.php">Movies</a></li>
+                        <li><a href="index.php?action=allMovies">Movies</a></li>
                         <li><a href="">Genre</a></li>
                         <li><a href="">Actors</a></li>
                         <li><a href="">Producers</a></li>
@@ -32,11 +32,8 @@
         </header>
 
         
-        <?php if(isset($homePage)) {echo $homePage;} ?>
-        <?php if(isset($filmPage)) {echo $filmPage;} ?>
-
-
-
+        <?php if(isset($content)) {echo $content; }?>
+       
         
         <footer>
                     <div id="footer">

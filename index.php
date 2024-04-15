@@ -1,5 +1,4 @@
 <?php
-
 use Controller\CinemaController;
 
 spl_autoload_register(function ($className){
@@ -13,5 +12,6 @@ if (isset($_GET["action"])) {
 
         case "homePage":$ctrlCinema->homePage();break;
         case "allMovies":$ctrlCinema->allMovies();break;
+        case "filmPage":$ctrlCinema->filmPage();break;
     }}
 ?>
