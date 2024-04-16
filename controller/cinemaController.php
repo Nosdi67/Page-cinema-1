@@ -40,7 +40,8 @@ class CinemaController{
                                 FROM genre
                                 INNER JOIN identifier ON identifier.id_genre = genre.id_genre
                                 INNER JOIN film ON identifier.id_film = film.id_film
-                                WHERE film.id_film= ?");
+                                WHERE film.id_film= $film_id");
+        $queryGenre->execute();
                                 
         if ($film_id) :
             // Utiliser la méthode du modèle pour récupérer les détails du film en fonction de l'ID

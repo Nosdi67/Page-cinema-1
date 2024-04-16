@@ -22,18 +22,21 @@ img{
     height: 77px;
     margin-left: 20px;
 }
-ul{
+nav ul{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center; 
 }
-li{
+nav li{
     list-style: none;
     padding: 40px;
     font-size: 20px;
     font-family: Lato;
     text-decoration: none;
+}
+p{
+    font-family: 'Lato';
 }
 #searchBar{
     width: 20%;
@@ -50,7 +53,7 @@ li{
 
     margin: auto;
 }
-.fa-solid.fa-magnifying-glass{
+.fa-solid.fa-magnifying-glass {
     height: 20px;
     width: 20px;
 }
@@ -250,10 +253,29 @@ h3{
     margin-right: 100px;
 } */
 .seeMoreBtn{
+    height: 35px;
+    width: 100px;
+    background-color: #fff9f985;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Lato';
+    transition: 1s;
+}
+.seeMoreBtnDiv{
+    display: flex;
     position: absolute;
+    bottom: 60px;
+    left: 380px;
     z-index: 1;
 }
-
+.seeMoreBtn:hover{
+    background-color: #fff9f9cc;
+    transition: 1s;
+    transform: translateY(-5px);
+}
 /********************Upcoming Movies */
 
 #UpcomingMovies{
@@ -424,7 +446,32 @@ h3{
 }
 .genre-container{
     position: absolute;
-    z-index: 2;
+    z-index: 1;
+    top: 300px;
+    left: 330PX;
+    height: 40px;
+    width: 230px;
+}
+.genre{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;    
+    align-items: center;
+    gap: 30px;
+}
+.genreBtn{
+    height: 28px;
+    width: 85px;
+    background-color: #fff9f985;
+    text-align: center;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    cursor: pointer;
+    transform: translateY(0px);
+    transition: 1s;
 }
 #movieBlock{
     display: flex;
@@ -443,20 +490,22 @@ h3{
     align-items: start;
     height: 500px;
     width: 250px;
-    background-color: rgb(188, 48, 48);
+    background-color:#67676769;
     position: relative;
     border-radius: 20px;
+    transition: 1s;
+    transform: translateY(0px);
 } 
 .MovieCardImg{
     width: 100%;
     height: 350px;
-    border-radius: 5px;
+    border-radius: 5px 5px 0px 0px;
     object-fit: cover;
 }
 .MovieCardImg img{
     width: 250px;
     height: 350px;
-    border-radius: 5px;
+    border-radius: 5px 5px 0px 0px;
     object-fit: cover;
     position: absolute;
     top: 0px;
@@ -464,6 +513,7 @@ h3{
 }
 #raiting{
     width: 100%;
+    height: 36px;
     
 }
 .raitingInfo{
@@ -474,15 +524,19 @@ h3{
     width: 100%;
     height: 100%;
     border-radius: 20px;
-    background-color: rgb(188, 48, 48);
     position: relative;
 }
 .raitingTxt{
-   position: absolute;
-    top: 10px;
-    left: 10px;
-  
+    margin-right: 200px;
+    padding-bottom: 12px;
+    font-family: 'Lato';
+    color: white;
+    padding-top: 12px;
+    margin-left: 10px;
+    height: 50px;
+    width: 80Px;
 }
+
 .IMdbLogo{
     width: 40%;
     height: 59%;
@@ -501,4 +555,268 @@ h3{
     top: 55px;
     right: 24px;
 }
+.fa-solid.fa-star{
+    padding-left: 10px
+}
+.seeMore{
+    position: absolute;
+    right: 94px;
+    top: 94px;
+    z-index: 1;
+    height: 31px;
+    width: 80px;
+    background-color: grey;
+    text-align: center;
+    /* display: flex; */
+    align-content: center;
+    border-radius: 5px;
+    /* color: white; */
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    transition: 1s;
+}
+.seeMore a{
+    color: white;
+}
+.seeMore:hover{
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px,
+    rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    background-color: #67676769;
+    color: white;
+    transition: 1s;
+}
+#movieCard:hover{
+    transform: translateY(-10px);
+    transition: 1s;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+select{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 5px;
+    text-align: center;
+    background: #67676769;
+    color: black;
+    height: 25px;
+    width: 70px;
+    font-family: 'Lato';
+}
+.filmBar{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+.filmBar ul{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.filmHeader{
+    font-family: 'Lato';
+    font-size: 40px;
+    color: Black;
+    padding: 20px 75px; 
+}
+#start{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 5px;
+    text-align: center;
+    background: #67676769;
+    color: black;
+    outline: none;
+    height: 25px;
+    width: 100px;
+    font-family: 'Lato';
+}
+.filmBar label{
+   font-family: 'Lato';
+    font-size: 20px;
+    color: Black;
+    padding-left: 30px;
+    padding-right: 15px;
+    outline: none;
+}
+.filmBar li input{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 5px;
+    text-align: center;
+    background: #67676769;
+    color: black;
+    height: 25px;
+    width: 100px;
+    font-family: 'Lato';
+    border: none;
+}
+.alloCineFilmBar{
+    display: block;
+    position: absolute;
+    top: 3px;
+    left: 200px;
+    height: auto;
+    width: 100px;
+}
+.ratings1{
+    position: relative;
+}
+.ratings2{
+    position: relative;
+    padding-left: 110px;
+}
+.imdbFilmBar{
+    display: block;
+    position: absolute;
+    top: 2px;
+    left: 308px;
+    height: auto;
+    width: 50px;
+}
+.searchProducer{
+    padding-left: 50px;
+}
+.searchProducer input{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 5px;
+    text-align: center;
+    background: #67676769;
+    color: black;
+    height: 25px;
+    width: 100px;
+    font-family: 'Lato';
+    outline: none;
+}
+.searchBtn{
+    position: relative;
+}
+#submit{
+    position: absolute;
+    top: -10px;
+    left: 5px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 5px;
+    text-align: center;
+    color: black;
+    height: 28px;
+    width: 28px;
+    font-family: 'Lato';
+    outline: none;
+    background-color: #D3D3D3;
+    cursor: pointer;
+}
+.movieCardOverlay {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 350px;
+    width: 250px;
+    background-color: rgba(0, 0, 0, 0); /* Ajoutez une opacité valide */
+    z-index: 1;
+    transition: background-color 1s; /* Corrigez la transition */
+}
 
+.cardSynopsis {
+    position: absolute;
+    top: 80px;
+    left: 50px;
+    color: white;
+    text-align: justify;
+    max-width: 150px;
+    max-height: 100px;
+    width: auto;
+    height: auto;
+    font-size: small;
+    opacity: 0;
+    transition: opacity 1s, transform 0.5s;
+    overflow: hidden;
+}
+
+.cardSynopsis::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    opacity: 0;
+}
+
+@keyframes typing {
+    from {
+        width: 0%;
+        text-align: start; 
+    }
+    to {
+        width: 100%;
+        text-align: justify;  
+    }
+}
+
+#movieBlock .movieCardOverlay:hover .cardSynopsis {
+    opacity: 1;
+    animation: typing 4s steps(50, end);
+}
+
+#movieBlock .movieCardOverlay:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.searchBtn input{
+    background-color: none;
+}
+.fa-solid.fa-magnifying-glass.fa-xl {
+    position: absolute;
+    top: 0  px;
+    left: 8px;
+    z-index: 0;
+}
+.genreBtn:hover{
+    transform: translateY(-5px);
+    transition: 1s;
+}
+.threeNav{
+    position: absolute;
+    top: 360px;
+    left: 65px;
+    height: auto;
+    width: 165Px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 1;
+    gap: 15px;
+}
+.navBtn{
+    height: 36px;
+    width: 36px;
+    border-radius: 100%;
+    background: #fff9f985;
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transform: translateY(0px);
+    transition: 1s;
+
+}
+.navBtn:hover{
+    transform: translateY(-5px);
+    transition: 1s;
+}

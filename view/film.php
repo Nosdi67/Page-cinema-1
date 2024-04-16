@@ -2,11 +2,11 @@
 session_start();
 ob_start();
 $title = 'DOMOVIES-';
-$genres =$queryGenre->fetchAll(PDO::FETCH_ASSOC);
+$genres = $queryGenre->fetchAll(PDO::FETCH_ASSOC);
 $filmDetails = $query->fetch(PDO::FETCH_ASSOC);
-
+// var_dump($genres);
+// var_dump($filmDetails);die;
 ?>
-
 <main>
     <section>
         <div class="film-page">
@@ -24,7 +24,7 @@ $filmDetails = $query->fetch(PDO::FETCH_ASSOC);
             <div class="genre-container">
                 <div class="genre">
                     <?php foreach ($genres as $genre): ?>
-                    <div class="genreBtn"><?php echo $genre['nom_genre'];?></div>
+                    <div class="genreBtn"><p><?php echo $genre['nom_genre'];?></p></div>
                     <?php endforeach; ?>
                 </div>
             </div>
@@ -38,6 +38,11 @@ $filmDetails = $query->fetch(PDO::FETCH_ASSOC);
                 <p>
                     <?php echo $filmDetails['annee'];?>
                 </p>
+            </div>
+            <div class="threeNav">
+                <div class="navBtn"><a href=""><i class="fa-regular fa-heart"></i></div></a>
+                <div class="navBtn"><a href=""><i class="fa-solid fa-share-nodes"></i></div></a>
+                <div class="navBtn"><a href=""><i class="fa-solid fa-film"></i></div></a>
             </div>
             <?php } else { ?>
             <p>Aucun détail de film trouvé.</p>
