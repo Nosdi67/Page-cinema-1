@@ -15,5 +15,6 @@ if (isset($_GET["action"])) {
         case "allMovies":$ctrlCinema->allMovies();break;
         case "filmPage":$ctrlCinema->filmPage($id);break;
         case "actorsPage":$ctrlCinema->allActors();break;
+        case "actorPage":$ctrlCinema->actorPage($id);break;
     }}
 ?>

@@ -46,19 +46,29 @@ class CinemaController{
         require "view/film.php";
     }
     public function allActors(){
-        $actor_id = isset($_GET['id']) ? $_GET['id'] : null;
         $bddCinema=Connect::seConnecter();
-        $actorRequete=$bddCinema->query("SELECT personne.nom, personne.prenom,personne.sexe,personne.naissance,personne.img
+        $actorRequete=$bddCinema->query("SELECT personne.nom, personne.prenom,personne.sexe,personne.naissance,personne.img,acteur.id_acteur
                                         FROM personne 
-                                        INNER JOIN acteur ON acteur.id_personne = personne.id_personne
-                                        ");
-       
-        if ($actor_id) :
-            // Utiliser la méthode du modèle pour récupérer les détails du film en fonction de l'ID
-            $actorDetails = \Model\Connect::getActorById($actor_id);
-        endif;
+                                        INNER JOIN acteur ON acteur.id_personne = personne.id_personne");
         
         require "view/actors.php";
+    }
+    public function actorPage($id){
+        $bddCinema=Connect::seConnecter();
+        $actorInfo=$bddCinema->prepare("SELECT nom, prenom, a.id_acteur, sexe, naissance, img
+                                            FROM personne p
+                                            INNER JOIN acteur a ON a.id_personne = p.id_personne
+                                            WHERE a.id_acteur = :id");
+        $actorInfo->execute([':id' => $id]);
+        $actorAndFilm=$bddCinema->prepare("SELECT nom, prenom, acteur.id_acteur,sexe,naissance,img,nom_role,film.nom_film,film.id_film,film_cover
+                                        FROM personne
+                                        INNER JOIN acteur ON acteur.id_personne = personne.id_personne
+                                        INNER JOIN jouer ON jouer.id_acteur = acteur.id_acteur
+                                        INNER JOIN film ON film.id_film = jouer.id_film
+                                        INNER JOIN role ON role.id_role = jouer.id_role
+                                        WHERE acteur.id_acteur=:id");
+        $actorAndFilm->execute([':id' => $id]);
+        require "view/actorPage.php";
     }
 }
 ?>

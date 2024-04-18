@@ -39,7 +39,7 @@
             </div>
             <p><?php echo $actor['prenom']. ' '.$actor['nom'];?></p>
             <div class="actorCardBtn">
-                <a href="">See more</a>
+                <a href="index.php?action=actorPage&id=<?php echo $actor['id_acteur']; ?>">See more</a>
             </div>
         </div>
         <?php endforeach; ?>

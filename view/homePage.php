@@ -135,7 +135,7 @@
    }
    // <?php foreach ($films as $film): ?>
    // Appeler la fonction avec l'URL de l'image de fond depuis PHP
-   extractDominantColor("<?php echo $film['film_back_img']; ?>");
+   extractDominantColor("<?php echo $film['film_back_img']; ?>");// faut explode ici et rajouter "\" au chemin.
    // <?php endforeach; ?>
 </script>
 <script>//Upcoming Movies Slides JS
