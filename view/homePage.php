@@ -133,9 +133,10 @@
        img.src = imageURL;
        
    }
-   
+   // <?php foreach ($films as $film): ?>
    // Appeler la fonction avec l'URL de l'image de fond depuis PHP
    extractDominantColor("<?php echo $film['film_back_img']; ?>");
+   // <?php endforeach; ?>
 </script>
 <script>//Upcoming Movies Slides JS
    function plusUpcomingSlides(n) {

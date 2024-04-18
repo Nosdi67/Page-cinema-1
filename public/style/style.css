@@ -4,6 +4,7 @@
 }
 #wrapper{
     background-color: #D3D3D3;
+    
 }
 nav{
     display: flex;
@@ -117,6 +118,8 @@ h3{
 .SiteLinksList{
     display: flex;
     gap: 10px;
+    list-style: none;
+    font-family: 'Lato';
 }
 .SiteLinksList li{
     margin: 0;
@@ -623,7 +626,7 @@ select{
     font-family: 'Lato';
     font-size: 40px;
     color: Black;
-    padding: 20px 75px; 
+    padding: 40px 130px; 
 }
 #start{
     -webkit-appearance: none;
@@ -819,4 +822,127 @@ select{
 .navBtn:hover{
     transform: translateY(-5px);
     transition: 1s;
+}
+/*Actors Page */
+#mainSection{
+    height: 100%;
+    width: 100%;
+}
+#actorsSection{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    max-height: 100%;
+    gap: 40px;
+}
+.actorCard{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 500px;
+    width: 250px;
+    background-color: #67676769;
+    position: relative;
+    border-radius: 20px;
+    transition: 1s;
+    transform: translateY(0px);
+}
+.actorCardImg{
+    width: 100%;
+    height: 350px;
+    border-radius: 5px 5px 0px 0px;
+    object-fit: cover;
+}
+.actorCardImg img{
+    width: 250px;
+    height: 350px;
+    border-radius: 5px 5px 0px 0px;
+    object-fit: cover;
+    position: absolute;
+    top: 0px;
+    left: -20px;
+}
+.actorCard p{
+    position: absolute;
+    bottom: 120px;
+    font-family: 'Lato';
+    text-align: center;
+    font-size: 20px;
+}
+.actorCard a{
+    position: absolute;
+    height: 22px;
+    width: 90px;
+    color: white;
+    font-family: 'Lato';
+    background-color:#454444;
+    text-align: center;
+    border-radius: 20px;
+    bottom: 30px;
+    right: 75px;
+    transition: 0.5s;
+}
+.actorCard:hover{
+    transform: translateY(-10px);
+    transition: 1s;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+.actorCard a:hover{
+    background-color: #4544448e;
+    transition: 0.5s;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+#actorNav{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+#actorNavHeader{
+    font-family: 'Lato';
+    font-size: 40px;
+    color: Black;
+    padding: 40px 130px;
+}
+#actorNav ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    border-radius: 5px;
+    margin-top: 10px;
+    list-style: none;
+    gap: 30px;
+}
+#actorNav label{
+    font-family: 'Lato';
+    font-size: 20px;
+    color: Black; 
+    padding-right: 15px;
+    outline: none;
+}
+#actorNav input{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 5px;
+    text-align: center;
+    background: #67676769;
+    color: black;
+    height: 25px;
+    width: 100px;
+    font-family: 'Lato';
+    border: none;
 }

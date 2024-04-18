@@ -22,7 +22,7 @@
                     <ul>
                         <li><a href="index.php?action=allMovies">Movies</a></li>
                         <li><a href="">Genre</a></li>
-                        <li><a href="">Actors</a></li>
+                        <li><a href="index.php?action=actorsPage">Actors</a></li>
                         <li><a href="">Producers</a></li>
                     </ul>
 
