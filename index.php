@@ -6,7 +6,8 @@ spl_autoload_register(function ($className){
 });
 
 $ctrlCinema = new CinemaController();
-$id = (isset($_GET['id']))? $_GET['id'] : null;
+$id = (isset($_GET['id'])) ? $_GET['id'] : null;
+$cleanId=filter_var($id, FILTER_SANITIZE_NUMBER_INT);
 
 if (isset($_GET["action"])) {
     switch ($_GET["action"]) {
@@ -16,5 +17,8 @@ if (isset($_GET["action"])) {
         case "filmPage":$ctrlCinema->filmPage($id);break;
         case "actorsPage":$ctrlCinema->allActors();break;
         case "actorPage":$ctrlCinema->actorPage($id);break;
+        case "genreList":$ctrlCinema->genreList();break;
+        case "addGenreForm":$ctrlCinema->addGenreForm();break;
+        case "addGenre":$ctrlCinema->addGenre();break;
     }}
 ?>

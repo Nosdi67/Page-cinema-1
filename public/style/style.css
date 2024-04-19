@@ -946,3 +946,55 @@ select{
     font-family: 'Lato';
     border: none;
 }
+#actorFilmSection{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 500px;
+    width: 75%;
+    gap: 100px;
+    padding-left: 50px;
+    padding-top: 100px;
+    padding-bottom: 50px;
+}
+.actorMovieCards{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    width: 250px;
+    background-color: #67676769;
+    position: relative;
+    border-radius: 20px;
+    transition: 1s;
+    transform: translateY(0px);
+}
+.actorFilmseeMore{
+    height: 35px;
+    width: 100px;
+    background-color: #fff9f985;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Lato';
+    transition: 1s;
+}
+.genreContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 200px;
+    width: 400px;
+}
+.addgenreBtn{
+  height: 20px;
+  width: 100px;
+  background-color: #fff9f985;
+  border-radius: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}

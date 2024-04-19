@@ -13,7 +13,7 @@ class CinemaController{
                         INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
                         INNER JOIN personne ON personne.id_personne = realisateur.id_personne");
         $query2=$bddCinema->query("SELECT nom_film,synopsis,film_cover
-                            FROM filmavenir");
+                                FROM filmavenir");
 
         require "view/homePage.php";
     }
@@ -60,15 +60,46 @@ class CinemaController{
                                             INNER JOIN acteur a ON a.id_personne = p.id_personne
                                             WHERE a.id_acteur = :id");
         $actorInfo->execute([':id' => $id]);
-        $actorAndFilm=$bddCinema->prepare("SELECT nom, prenom, acteur.id_acteur,sexe,naissance,img,nom_role,film.nom_film,film.id_film,film_cover
-                                        FROM personne
-                                        INNER JOIN acteur ON acteur.id_personne = personne.id_personne
-                                        INNER JOIN jouer ON jouer.id_acteur = acteur.id_acteur
-                                        INNER JOIN film ON film.id_film = jouer.id_film
-                                        INNER JOIN role ON role.id_role = jouer.id_role
-                                        WHERE acteur.id_acteur=:id");
+        
+        $actorAndFilm=$bddCinema->prepare("SELECT nom, prenom, a.id_acteur,sexe,naissance,img,nom_role,f.nom_film,f.id_film,film_cover
+                                            FROM personne p
+                                            INNER JOIN acteur a ON a.id_personne = p.id_personne
+                                            INNER JOIN jouer j ON j.id_acteur = a.id_acteur
+                                            INNER JOIN film f ON f.id_film = j.id_film
+                                            INNER JOIN role r ON r.id_role = j.id_role
+                                            WHERE a.id_acteur=:id");
         $actorAndFilm->execute([':id' => $id]);
         require "view/actorPage.php";
     }
+    
+    public function genreList(){
+        $bddCinema=Connect::seConnecter();
+
+        $genreRequete=$bddCinema->query("SELECT * FROM genre");
+
+        require "view/genrePage.php";
+    }
+
+    public function addGenreForm(){
+        require "view/genreForm.php";
+    }
+    
+    public function addGenre(){
+        if(isset($_POST['nom_genre'])){
+            $nomGenre=filter_input(INPUT_POST, 'nom_genre', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $bddCinema=Connect::seConnecter();
+            
+            $insertGenre=$bddCinema->prepare("INSERT INTO genre(nom_genre) VALUES (:nomGenre)");
+            $insertGenre->execute([':nomGenre' => $nomGenre]);
+        }
+        require "view/genreForm.php";
+    }
+    //une injection SQL c'est un problème de sécurité, 
+    //on ne peut pas mettre de données directement dans une requête SQL.
+    //on risque de créer des failles de sécurité.
+
+    //une requet prepare est une requête préparée qui permet d'éviter les injections SQL.
 }
+    
 ?>
+

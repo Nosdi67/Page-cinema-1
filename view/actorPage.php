@@ -1,10 +1,10 @@
 <?php 
  session_start();
  ob_start();
- $actorFilms=$actorInfo->fetchAll();
- $actors=
+ $actorFilms=$actorAndFilm->fetchAll();
+ $actors=$actorInfo->fetchAll();
  $title='DOMOVIES';
-//  var_dump($actor);die;
+//  var_dump($actorFilms);die; 
 ?>
 <main>
     <section id="actorBioSection">
@@ -22,13 +22,13 @@
         <?php endforeach ?>
     </section>
     <section id="actorFilmSection">
-        <?php foreach ($actors as $actor): ?>
+        <?php foreach ($actorFilms as $actorFilm): ?>
         <div class="actorMovieCards">
             <div class="MovieCardImg">
-               <img  src="<?php echo $actor['film_cover']; ?>" alt="image du film <?php echo $actor['nom_film']; ?>">
+               <img  src="<?php echo $actorFilm['film_cover']; ?>" alt="image du film <?php echo $actorFilm['nom_film']; ?>">
             </div>
-            <div class="seeMore">
-                <a href="index.php?action=filmPage&id=<?php echo $actor['id_film'] ?>">See more</a>
+            <div class="actorFilmseeMore">
+                <a href="index.php?action=filmPage&id=<?php echo $actorFilm['id_film'] ?>">See more</a>
             </div>
       </div>
       <?php endforeach; ?>

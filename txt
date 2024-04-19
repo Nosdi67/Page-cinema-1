@@ -2,3 +2,14 @@ definir une requete http
 terme logique metier mvc, qui s'occupe
 definir une superglobale
 definir PDO et pq utilisr pdo et pas mySQLI pr se co a une bdd
+
+
+    faire vue liste genres
+
+    faire biutn ajouter genre , form 
+
+    creer action dans index 
+
+    controller creer method addGenreForm
+
+    controller methode addGenre
