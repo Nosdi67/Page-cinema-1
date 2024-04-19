@@ -956,19 +956,70 @@ select{
     padding-left: 50px;
     padding-top: 100px;
     padding-bottom: 50px;
+    position: relative;
 }
 .actorMovieCards{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 500px;
+    flex-wrap: wrap;
+    height: 450px;
     width: 250px;
     background-color: #67676769;
-    position: relative;
     border-radius: 20px;
     transition: 1s;
     transform: translateY(0px);
+    position: absolute;
+    bottom: 25px;
+    left: 75px;
+}
+#actorBioSection{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 100%;
+    width: 75%;
+    padding: 50px 150px;
+    background: #fff9f985;
+    border-radius: 20px;
+    margin: 20px 50px;
+}
+.actorBio{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    width: 250px;
+    position: relative;
+    border-radius: 20px;
+}
+.actorBio img{
+    width: 330px;
+    height: auto;
+    border-radius: 20px;
+    object-fit: cover;
+}
+.actorLorem{
+    position: relative;
+    padding-top: 70px;
+    height: 30%;
+    width: 50%;
+    text-align: justify;
+}
+.actorLorem h2{
+    position: absolute;
+    font-family: 'Lato';
+    font-size: 30px;
+    color: black;
+    top: -15px;
+}
+#actorFilmSection header{
+    font-size: 30px;
+    font-family: 'Lato';
+    padding-left: 20px;
 }
 .actorFilmseeMore{
     height: 35px;
@@ -981,6 +1032,12 @@ select{
     align-items: center;
     font-family: 'Lato';
     transition: 1s;
+    margin-top: 30px;
+}
+.actorFilmseeMore:hover{
+    background-color: #fff9f985;
+    transition: 1s;
+    transform: translateY(-5px);
 }
 .genreContainer{
     display: flex;

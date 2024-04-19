@@ -127,7 +127,7 @@
            var gradientBg = "linear-gradient(to bottom, " + color + ", #000000)";
            
            // Appliquer le dégradé linéaire à l'arrière-plan de l'élément parent avec l'ID "wrapper"
-           document.querySelector('#wrapper').style.background = gradientBg;
+           document.querySelector('#wrapper').style.background = gradientBg;//gradientBg sert au dégradé linéaire
        };
    
        img.src = imageURL;
