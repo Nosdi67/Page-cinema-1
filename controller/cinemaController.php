@@ -2,6 +2,7 @@
 
 namespace Controller;
 use Model\Connect;
+use PDO;
 
 class CinemaController{
 
@@ -85,12 +86,8 @@ class CinemaController{
 
         require "view/genrePage.php";
     }
-
-    public function addGenreForm(){
-        require "view/genreForm.php";
-    }
     
-    public function addGenre(){
+    public function adminPageGenrePost(){
         if(isset($_POST['nom_genre'])){
             $nomGenre=filter_input(INPUT_POST, 'nom_genre', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $bddCinema=Connect::seConnecter();
@@ -98,7 +95,7 @@ class CinemaController{
             $insertGenre=$bddCinema->prepare("INSERT INTO genre(nom_genre) VALUES (:nomGenre)");
             $insertGenre->execute([':nomGenre' => $nomGenre]);
         }
-        require "view/genreForm.php";
+        require "view/adminPage.php";
     }
     //une injection SQL c'est un problème de sécurité, 
     //on ne peut pas mettre de données directement dans une requête SQL.
@@ -144,7 +141,18 @@ class CinemaController{
         require "view/producer.php";
     }
     public function adminPage(){
-
+        $bddCinema = Connect::seConnecter();
+    
+        
+        $realisateurList = $bddCinema->prepare("SELECT nom, prenom, r.id_realisateur FROM personne p INNER JOIN realisateur r ON p.id_personne = r.id_personne");
+        $realisateurList->execute();
+    
+        
+        $genreList = $bddCinema->prepare("SELECT * FROM genre");
+        $genreList->execute();
+        
+    
+        
         require "view/adminPage.php";
     }
     
@@ -152,19 +160,31 @@ class CinemaController{
         
         $bddCinema=Connect::seConnecter();
 
-        if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['sexe']) && isset($_POST['naissance']) && isset($_POST['img'])){
+        if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['sexe']) && isset($_POST['naissance']) && isset($_POST['img']) && isset($_POST['role'])){
             $nom=filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $prenom=filter_input(INPUT_POST, 'prenom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $sexe=filter_input(INPUT_POST,'sexe', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $naissance=filter_input(INPUT_POST, 'naissance', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $img=filter_input(INPUT_POST, 'img', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $role=$_POST['role'];
             
-        $actorInfo=$bddCinema->prepare("INSERT INTO personne (nom,prenom,sexe,naissance,img)
+        $personneInfo=$bddCinema->prepare("INSERT INTO personne (nom,prenom,sexe,naissance,img)
                                         VALUES (:nom,:prenom,:sexe,:naissance,:img)");
         
         
-        $actorInfo->execute([':nom' => $nom, ':prenom' => $prenom, ':sexe' => $sexe, ':naissance' => $naissance, ':img' => $img]);    
+        $personneInfo->execute([':nom' => $nom, ':prenom' => $prenom, ':sexe' => $sexe, ':naissance' => $naissance, ':img' => $img]);  
         
+        $id_personne=$bddCinema->lastInsertId();
+        
+        if($role == "acteur"){
+            $personneInfo=$bddCinema->prepare("INSERT INTO acteur (id_personne)
+                                                VALUES (:id_personne)");
+            $personneInfo->execute([':id_personne' => $id_personne]);
+        } else if ($role == "realisateur"){
+           $personneInfo=$bddCinema->prepare("INSERT INTO realisateur (id_personne)
+                                                VALUES (:id_personne)");
+            $personneInfo->execute([':id_personne' => $id_personne]);
+        }
     }
     require "view/adminPage.php";
        
@@ -186,15 +206,18 @@ class CinemaController{
             $film_cover=filter_input(INPUT_POST, 'film_cover', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             $film_title_img=filter_input(INPUT_POST, 'film_title_img', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
             
-            $filmInfo=$bddCinema->prepare("INSERT INTO film (nom_film,film_cover,annee,duree,synopsis,note_alloCine,note_imdb,id_realisateur,film_back_img,film_cover,film_title_img)
-                                        VALUES (:nom_film,:film_cover,:annee,:duree,:synopsis,:note_alloCine,:note_imdb,:id_realisateur,:film_back_img,:film_cover,:film_title_img)");
+            $filmInfo=$bddCinema->prepare("INSERT INTO film (nom_film,film_cover,annee,duree,synopsis,note_alloCine,note_imdb,id_realisateur,film_back_img,film_title_img)
+                                        VALUES (:nom_film,:film_cover,:annee,:duree,:synopsis,:note_alloCine,:note_imdb,:id_realisateur,:film_back_img,:film_title_img)");
 
             $filmInfo->execute([':nom_film' => $nom_film, ':film_cover' => $film_cover, ':annee' => $annee, ':duree' => $duree, ':synopsis' => $synopsis, ':note_alloCine' => $note_alloCine, ':note_imdb' => $note_imdb,  
                                 ':id_realisateur' => $id_realisateur, ':film_back_img' => $film_back_img, ':film_cover' => $film_cover, ':film_title_img' => $film_title_img]);
+            
+           
+            require "view/adminPage.php";
+        }
 
-            } 
-        require "view/adminPage.php";
+
     }
-}
+}   
 ?>
 
