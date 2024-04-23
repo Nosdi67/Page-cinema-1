@@ -60,6 +60,12 @@ class CinemaController{
                                             INNER JOIN acteur a ON a.id_personne = p.id_personne
                                             WHERE a.id_acteur = :id");
         $actorInfo->execute([':id' => $id]);
+
+        $filmsInfo=$bddCinema->prepare("SELECT nom, prenom, a.id_acteur, sexe
+                                            FROM personne p
+                                            INNER JOIN acteur a ON a.id_personne = p.id_personne
+                                            WHERE a.id_acteur = :id");
+        $filmsInfo->execute([':id' => $id]);
         
         $actorAndFilm=$bddCinema->prepare("SELECT nom, prenom, a.id_acteur,sexe,naissance,img,nom_role,f.nom_film,f.id_film,film_cover
                                             FROM personne p
@@ -99,6 +105,44 @@ class CinemaController{
     //on risque de créer des failles de sécurité.
 
     //une requet prepare est une requête préparée qui permet d'éviter les injections SQL.
+
+    public function producersPage(){
+        $bddCinema=Connect::seConnecter();
+        $producersInfo=$bddCinema->prepare("SELECT nom, prenom, r.id_realisateur,sexe,naissance,img
+                                            FROM personne p
+                                            INNER JOIN realisateur r ON r.id_personne = p.id_personne");
+        $producersInfo->execute();
+        require "view/producersPage.php";
+    }
+    
+    public function producerPage($id){
+
+        $bddCinema=Connect::seConnecter();
+        $producersInfo=$bddCinema->prepare("SELECT nom, prenom, r.id_realisateur,sexe,naissance,img,nom_film,id_film,film_cover
+                                            FROM personne p
+                                            INNER JOIN realisateur r ON r.id_personne = p.id_personne
+                                            INNER JOIN film f ON f.id_realisateur = r.id_realisateur
+                                            WHERE r.id_realisateur=:id");
+        
+        $producersInfo->execute([':id' => $id]);
+
+        $producersInfo2=$bddCinema->prepare("SELECT nom, prenom, r.id_realisateur,sexe,naissance,img,nom_film,id_film,film_cover
+                                            FROM personne p
+                                            INNER JOIN realisateur r ON r.id_personne = p.id_personne
+                                            INNER JOIN film f ON f.id_realisateur = r.id_realisateur
+                                            WHERE r.id_realisateur=:id");
+        
+        $producersInfo2->execute([':id' => $id]);
+
+        $producersInfo3=$bddCinema->prepare("SELECT nom, prenom, r.id_realisateur,sexe,naissance,img,nom_film,id_film,film_cover
+                                            FROM personne p
+                                            INNER JOIN realisateur r ON r.id_personne = p.id_personne
+                                            INNER JOIN film f ON f.id_realisateur = r.id_realisateur
+                                            WHERE r.id_realisateur=:id");
+        
+        $producersInfo3->execute([':id' => $id]);
+        require "view/producer.php";
+    }
 }
     
 ?>

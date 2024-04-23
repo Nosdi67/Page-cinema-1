@@ -20,5 +20,7 @@ if (isset($_GET["action"])) {
         case "genreList":$ctrlCinema->genreList();break;
         case "addGenreForm":$ctrlCinema->addGenreForm();break;
         case "addGenre":$ctrlCinema->addGenre();break;
+        case "producersPage":$ctrlCinema->producersPage();break;
+        case "producerPage":$ctrlCinema->producerPage($id);break;
     }}
 ?>
