@@ -1048,7 +1048,7 @@ select{
     flex-direction: row;
     justify-content: center;
     height: 200px;
-    width: 400px;
+    width: 100%;
 }
 .addgenreBtn{
   height: 20px;

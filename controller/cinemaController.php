@@ -143,7 +143,58 @@ class CinemaController{
         $producersInfo3->execute([':id' => $id]);
         require "view/producer.php";
     }
-}
+    public function adminPage(){
+
+        require "view/adminPage.php";
+    }
     
+    public function adminPageActorPost(){
+        
+        $bddCinema=Connect::seConnecter();
+
+        if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['sexe']) && isset($_POST['naissance']) && isset($_POST['img'])){
+            $nom=filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $prenom=filter_input(INPUT_POST, 'prenom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $sexe=filter_input(INPUT_POST,'sexe', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $naissance=filter_input(INPUT_POST, 'naissance', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $img=filter_input(INPUT_POST, 'img', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            
+        $actorInfo=$bddCinema->prepare("INSERT INTO personne (nom,prenom,sexe,naissance,img)
+                                        VALUES (:nom,:prenom,:sexe,:naissance,:img)");
+        
+        
+        $actorInfo->execute([':nom' => $nom, ':prenom' => $prenom, ':sexe' => $sexe, ':naissance' => $naissance, ':img' => $img]);    
+        
+    }
+    require "view/adminPage.php";
+       
+    }
+
+    public function adminPageFilmPost(){
+        $bddCinema=Connect::seConnecter();
+
+        if(isset($_POST['nom_film']) && isset($_POST['film_cover']) && isset($_POST['annee']) && isset($_POST['duree']) && isset($_POST['synopsis']) && isset($_POST['note_alloCine']) && isset($_POST['note_imdb']) && isset($_POST['id_realisateur']) && isset($_POST['film_back_img']) && isset($_POST['film_cover']) && isset($_POST['film_title_img'])){
+            $nom_film=filter_input(INPUT_POST, 'nom_film', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $film_cover=filter_input(INPUT_POST, 'film_cover', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $annee=filter_input(INPUT_POST, 'annee', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $duree=filter_input(INPUT_POST, 'duree', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $synopsis=filter_input(INPUT_POST,'synopsis', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $note_alloCine=filter_input(INPUT_POST, 'note_alloCine', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $note_imdb=filter_input(INPUT_POST, 'note_imdb', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $id_realisateur=filter_input(INPUT_POST, 'id_realisateur', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $film_back_img=filter_input(INPUT_POST, 'film_back_img', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $film_cover=filter_input(INPUT_POST, 'film_cover', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $film_title_img=filter_input(INPUT_POST, 'film_title_img', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            
+            $filmInfo=$bddCinema->prepare("INSERT INTO film (nom_film,film_cover,annee,duree,synopsis,note_alloCine,note_imdb,id_realisateur,film_back_img,film_cover,film_title_img)
+                                        VALUES (:nom_film,:film_cover,:annee,:duree,:synopsis,:note_alloCine,:note_imdb,:id_realisateur,:film_back_img,:film_cover,:film_title_img)");
+
+            $filmInfo->execute([':nom_film' => $nom_film, ':film_cover' => $film_cover, ':annee' => $annee, ':duree' => $duree, ':synopsis' => $synopsis, ':note_alloCine' => $note_alloCine, ':note_imdb' => $note_imdb,  
+                                ':id_realisateur' => $id_realisateur, ':film_back_img' => $film_back_img, ':film_cover' => $film_cover, ':film_title_img' => $film_title_img]);
+
+            } 
+        require "view/adminPage.php";
+    }
+}
 ?>
 

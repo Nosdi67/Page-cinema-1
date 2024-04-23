@@ -24,6 +24,7 @@
                         <li><a href="index.php?action=genreList">Genre</a></li>
                         <li><a href="index.php?action=actorsPage">Actors</a></li>
                         <li><a href="index.php?action=producersPage">Producers</a></li>
+                        <li><a href="index.php?action=adminPage">Admin Page</a></li>
                     </ul>
 
                     <input id="searchBar" type="search" placeholder="Search for an actor, movie...">

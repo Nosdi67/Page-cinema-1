@@ -22,5 +22,8 @@ if (isset($_GET["action"])) {
         case "addGenre":$ctrlCinema->addGenre();break;
         case "producersPage":$ctrlCinema->producersPage();break;
         case "producerPage":$ctrlCinema->producerPage($id);break;
+        case "adminPage":$ctrlCinema->adminPage();break;
+        case "adminPageActorPost":$ctrlCinema->adminPageActorPost();break;
+        case "adminPageFilmPost":$ctrlCinema->adminPageFilmPost();break;
     }}
 ?>
