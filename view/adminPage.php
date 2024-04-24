@@ -70,14 +70,12 @@ $realisateurs = $realisateurList->fetchAll();
                             <?php endforeach; ?>
                     </select><br><br>
 
-                <label for="id_genre">Genre du Film*:</label>
-                <select id="id_genre" name="id_genre" required>
-                    <?php foreach ($genres as $genre): ?>
-                        <option value="<?php echo htmlspecialchars($genre['id_genre']);?>">
-                        <?php echo htmlspecialchars($genre['nom_genre']);?>
-                        </option>
-                        <?php endforeach; ?>
-                        </select><br><br>
+                     <label for="id_genre">Genre du Film*:</label><br>
+                     <?php foreach ($genres as $genre): ?>
+                     <input type="checkbox" id="genre_<?php echo htmlspecialchars($genre['id_genre']); ?>" name="id_genre[]" value="<?php echo htmlspecialchars($genre['id_genre']); ?>">
+                     <label for="genre_<?php echo htmlspecialchars($genre['id_genre']); ?>"><?php echo htmlspecialchars($genre['nom_genre']); ?></label><br>
+                     <?php endforeach; ?>
+                     <br><br>
                
                <label for="film_cover">Affiche du Film:</label>
                <input type="file" id="film_cover" name="film_cover"><br><br>

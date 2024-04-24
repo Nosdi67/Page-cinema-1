@@ -5,6 +5,7 @@
  $actors=$actorInfo->fetchAll();
  $films=$filmsInfo->fetch();
  $title='DOMOVIES';
+ var_dump($_POST);
 ?>
 <main>
     <section id="actorBioSection">
@@ -36,6 +37,17 @@
             </div>
       </div>
       <?php endforeach; ?>
+    </section>
+
+    <section>
+            <div class="deleteForm">
+            <form  method="POST" action="index.php?action=deleteActor">
+                <?php foreach ($actors as $actor): ?>
+                <input type="hidden" name="id_acteur" value="<?php echo $actor['id_acteur']; ?>">
+                <?php endforeach; ?>
+                <input type="submit" value="Supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet acteur ?');">
+            </form>
+            </div>
     </section>
 </main>
 

@@ -24,5 +24,10 @@ if (isset($_GET["action"])) {
         case "adminPageActorPost":$ctrlCinema->adminPageActorPost();break;
         case "adminPageFilmPost":$ctrlCinema->adminPageFilmPost();break;
         case "adminPageGenrePost":$ctrlCinema->adminPageGenrePost();break;
+        case "deleteFilm":$ctrlCinema->deleteFilm();break;
+        case "deleteActor":$ctrlCinema->deleteActor();break;
+        case "filmDeletePage":$ctrlCinema->filmDeletePage();break;
+        case "actorDeletePage":$ctrlCinema->actorDeletePage();break;
+        case "addCastingActor":$ctrlCinema->addCastingActor();break;
     }}
 ?>

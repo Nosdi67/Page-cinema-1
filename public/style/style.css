@@ -1122,3 +1122,36 @@ select{
     text-align: center;
     font-size: 20px;
 }
+.filmSupprimeHeader{
+    font-family: 'Lato';
+    font-size: 40px;
+    color: Black;
+    padding: 30px 52px;
+}
+.revenirHomeBtn{
+    height: 35px;
+    width: 210px;
+    background-color: #fff9f985;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Lato';
+    margin-top: 30px;
+}
+.filmSupprime{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.actorsDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    max-height: 100%;
+    gap: 40px;
+}

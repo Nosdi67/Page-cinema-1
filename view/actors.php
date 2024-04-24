@@ -44,6 +44,7 @@
         </div>
         <?php endforeach; ?>
     </section>
+    
 </main>
 
 

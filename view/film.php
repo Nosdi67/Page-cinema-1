@@ -4,8 +4,11 @@ ob_start();
 $title = 'DOMOVIES-';
 $genres = $queryGenre->fetchAll(PDO::FETCH_ASSOC);
 $filmDetails = $query->fetch(PDO::FETCH_ASSOC);
+$actors=$actorInfo->fetchALL(PDO::FETCH_ASSOC);
+$actorsSelects=$actorsSelect->fetchAll(PDO::FETCH_ASSOC);
+$films=$film->fetchAll(PDO::FETCH_ASSOC)
 // var_dump($genres);
-// var_dump($filmDetails);die;
+// var_dump($actors);die;
 ?>
 <main>
     <section>
@@ -47,6 +50,49 @@ $filmDetails = $query->fetch(PDO::FETCH_ASSOC);
             <?php } else { ?>
             <p>Aucun détail de film trouvé.</p>
             <?php } ?>
+        </div>
+    </section>
+    <section>
+    <form method="POST" action="index.php?action=deleteFilm">
+        <input type="hidden" name="id_film" value="<?php echo $filmDetails['id_film']; ?>">
+        <input type="submit" value="Supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce film ?');">
+    </form>
+    </section>
+    <section>
+        <div class="addActor">
+        <form method="post" action="index.php?action=addCastingActor">
+            <label for="film">Choisir un film:</label>
+            <select name="id_film" id="film">
+                <?php foreach ($films as $film): ?>
+               <option value="<?php echo htmlspecialchars($film['id_film']);?>">
+               <?php echo  htmlspecialchars($film['nom_film']); ?></option>
+               <?php endforeach; ?>
+            </select>
+
+            <label for="acteur">Choisir des acteurs:</label>
+            <select name="id_acteur" id="acteur" required>
+                <?php foreach ($actorsSelects as $actorsSelect): ?>
+               <option value="<?php echo htmlspecialchars($actorsSelect['id_acteur']);?>">
+               <?php echo  htmlspecialchars($actorsSelect['prenom'].' '.$actorsSelect['nom']); ?></option>
+               <?php endforeach; ?>            
+            </select>
+            <button type="submit">Ajouter au casting</button>
+        </form>
+        </div>
+    </section>
+    <section>
+        <div class="actorsDiv">
+            <header class="actorDivHeader"></header>
+              <?php foreach ($actors as $actor): ?>      
+            <div class="actorCard">
+                <div class="actorCardImg">
+                <img src="<?php echo $actor['img']; ?>" alt="image de <?php echo $actor['prenom']. ' '.$actor['nom']; ?>"/>
+                </div>
+                <div class="actorSeeMore">
+                    <a href="index.php?action=actorPage&id=<?php echo $actor['id_acteur'] ?>">See more</a>
+                </div>
+            </div>
+            <?php endforeach; ?>
         </div>
     </section>
 </main>
