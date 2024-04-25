@@ -4,6 +4,7 @@
  $actors=$actorRequete->fetchAll();
  $title='DOMOVIES-Actors';
 //  var_dump($actors);die;
+
 ?>
 
 <main id="mainSection">

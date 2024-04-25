@@ -29,5 +29,7 @@ if (isset($_GET["action"])) {
         case "filmDeletePage":$ctrlCinema->filmDeletePage();break;
         case "actorDeletePage":$ctrlCinema->actorDeletePage();break;
         case "addCastingActor":$ctrlCinema->addCastingActor();break;
+        case "deleteActorFromCasting":$ctrlCinema->deleteActorFromCasting();break;
+        case "deleteProducer":$ctrlCinema->deleteProducer();break;
     }}
 ?>

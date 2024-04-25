@@ -8,11 +8,10 @@ class CinemaController{
 
     public function homePage(){
         $bddCinema=Connect::seConnecter();
-        $query=$bddCinema->query("SELECT film.nom_film,film.annee,personne.prenom,personne.nom,film_back_img,synopsis,film_cover,film_title_img,id_film,
+        $query=$bddCinema->query("SELECT film.nom_film,film_back_img,synopsis,film_cover,film_title_img,id_film,
                         CONCAT(FLOOR(film.duree/ 60), ' Heures et ', MOD(film.duree, 60),'minutes') AS temps_convert
                         FROM film
-                        INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
-                        INNER JOIN personne ON personne.id_personne = realisateur.id_personne");
+                        INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur");
         $query2=$bddCinema->query("SELECT nom_film,synopsis,film_cover
                                 FROM filmavenir");
 
@@ -20,23 +19,21 @@ class CinemaController{
     }
     public function allMovies(){
         $bddCinema=Connect::seConnecter();
-        $query=$bddCinema->query("SELECT film.nom_film,film.annee,personne.prenom,personne.nom,film_back_img,synopsis,film_cover,film_title_img,id_film,note_alloCine,note_imdb,
+        $query=$bddCinema->query("SELECT film.nom_film,synopsis,film_cover,id_film,note_alloCine,note_imdb,
                         CONCAT(FLOOR(film.duree/ 60), ' Heures et ', MOD(film.duree, 60),'minutes') AS temps_convert
-                        FROM film
-                        INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
-                        INNER JOIN personne ON personne.id_personne = realisateur.id_personne");
+                        FROM film");
                         
         require "view/allMovies.php";
     }
     public function filmPage($id){
         $bddCinema=Connect::seConnecter();
-        $query=$bddCinema->prepare("SELECT id_film,film.nom_film,film.annee,personne.prenom,personne.nom,film_back_img,synopsis,film_cover,film_title_img,id_film,
-                        CONCAT(FLOOR(film.duree/ 60), ' Heures et ', MOD(film.duree, 60),'minutes') AS temps_convert
-                        FROM film
-                        INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur
-                        INNER JOIN personne ON personne.id_personne = realisateur.id_personne
-                        WHERE film.id_film= :id");
+        $query=$bddCinema->prepare("SELECT id_film,film.nom_film,film.annee,film_back_img,synopsis,film_cover,film_title_img,id_film,
+                                    CONCAT(FLOOR(film.duree/ 60), ' Heures et ', MOD(film.duree, 60),'minutes') AS temps_convert
+                                    FROM film
+                                    WHERE film.id_film= :id");
+
         $query->execute([':id' => $id]);
+
         $queryGenre= $bddCinema->prepare("SELECT nom_genre
                                         FROM genre
                                         INNER JOIN identifier ON identifier.id_genre = genre.id_genre
@@ -44,7 +41,7 @@ class CinemaController{
                                         WHERE film.id_film= :id");
         $queryGenre->execute([':id' => $id]);
 
-        $actorInfo=$bddCinema->prepare("SELECT a.id_acteur,nom, prenom,sexe, naissance, img
+        $actorInfo=$bddCinema->prepare("SELECT a.id_acteur,nom, prenom,sexe, naissance, img, f.id_film
                                         FROM personne p
                                         INNER JOIN acteur a ON a.id_personne = p.id_personne
                                         INNER JOIN jouer j ON j.id_acteur = a.id_acteur
@@ -59,8 +56,22 @@ class CinemaController{
                                             FROM acteur a 
                                             INNER JOIN personne p ON a.id_personne = p.id_personne");
         $actorsSelect->execute();
-                                
+
+        $roleSelect = $bddCinema->prepare("SELECT * FROM role");
+        $roleSelect->execute();
+
+        $filmCasting=$bddCinema->prepare("  SELECT nom,prenom,a.id_acteur
+                                            FROM personne p 
+                                            INNER JOIN acteur a ON a.id_personne = p.id_personne
+                                            INNER JOIN jouer j ON j.id_acteur = a.id_acteur
+                                            INNER JOIN film f ON f.id_film = j.id_film
+                                            WHERE f.id_film =:id");
+        
+        $filmCasting->execute([':id' => $id]);
+
         require "view/film.php";
+
+        
     }
     public function allActors(){
         $bddCinema=Connect::seConnecter();
@@ -130,30 +141,32 @@ class CinemaController{
     
     public function producerPage($id){
 
+        
         $bddCinema=Connect::seConnecter();
-        $producersInfo=$bddCinema->prepare("SELECT nom, prenom, r.id_realisateur,sexe,naissance,img,nom_film,id_film,film_cover
+        $producersInfo=$bddCinema->prepare("SELECT nom, prenom, r.id_realisateur,sexe,naissance,img
                                             FROM personne p
                                             INNER JOIN realisateur r ON r.id_personne = p.id_personne
-                                            INNER JOIN film f ON f.id_realisateur = r.id_realisateur
                                             WHERE r.id_realisateur=:id");
         
         $producersInfo->execute([':id' => $id]);
 
-        $producersInfo2=$bddCinema->prepare("SELECT nom, prenom, r.id_realisateur,sexe,naissance,img,nom_film,id_film,film_cover
-                                            FROM personne p
-                                            INNER JOIN realisateur r ON r.id_personne = p.id_personne
-                                            INNER JOIN film f ON f.id_realisateur = r.id_realisateur
+        // if (!isset($_POST['img']) || $_POST['img'] === NULL){
+        //     $img="image\image utilisteur.png";
+            
+        // }else{
+        //     $img=$_POST['img'];
+            
+        // }
+        // if(empty($_POST['img']) || $_POST['img'] === NULL){
+        //     $producerImg=$bddCinema->prepare("INSERT INTO realisateur (img) VALUES (:img)");
+        //     $producerImg->execute([':img'=>'image\image utilisteur.png']);
+        // }
+        $producersInfo2=$bddCinema->prepare("SELECT nom_film,id_film,film_cover
+                                            FROM film f
+                                            INNER JOIN realisateur r ON r.id_realisateur = f.id_realisateur
                                             WHERE r.id_realisateur=:id");
         
         $producersInfo2->execute([':id' => $id]);
-
-        $producersInfo3=$bddCinema->prepare("SELECT nom, prenom, r.id_realisateur,sexe,naissance,img,nom_film,id_film,film_cover
-                                            FROM personne p
-                                            INNER JOIN realisateur r ON r.id_personne = p.id_personne
-                                            INNER JOIN film f ON f.id_realisateur = r.id_realisateur
-                                            WHERE r.id_realisateur=:id");
-        
-        $producersInfo3->execute([':id' => $id]);
         require "view/producer.php";
     }
     public function adminPage(){
@@ -266,20 +279,15 @@ class CinemaController{
         require "view/filmDeletePage.php";
     }
 
-    public function deleteActor(){
+    public function deleteActor(){//MARCHE PAS
         $bddCinema=Connect::seConnecter();
-        $id_actor = filter_input(INPUT_POST, 'id_actor', FILTER_SANITIZE_NUMBER_INT);
-        $id_personne = filter_input(INPUT_POST, 'id_personne', FILTER_SANITIZE_NUMBER_INT);
+        $id_actor = filter_input(INPUT_POST, 'id_acteur', FILTER_SANITIZE_NUMBER_INT);
 
-        if (isset($_POST['id_actor']) && isset($_POST['id_personne'])) {
-            $id_actor = $_POST['id_actor'];
-            $id_personne = $_POST['id_personne'];
+        if (isset($_POST['id_acteur'])){
+            $id_actor = $_POST['id_acteur'];
 
-        $deleteFromActor = $bddCinema->prepare("START TRANSACTION;
-                                                DELETE FROM acteur WHERE id_acteur = :id_acteur;
-                                                DELETE FROM personne WHERE id_personne = :id_personne;
-                                                COMMIT;");
-        $deleteFromActor->execute([':id_acteur' => $id_actor, ':id_personne' => $id_personne]);
+        $deleteFromActor = $bddCinema->prepare("DELETE FROM acteur WHERE id_acteur = :id_acteur;");
+        $deleteFromActor->execute([':id_acteur' => $id_actor]);
 
         
             header('Location: index.php?action=actorDeletePage');
@@ -295,19 +303,52 @@ class CinemaController{
         $bddCinema=Connect::seConnecter();
         $id_film = filter_input(INPUT_POST, 'id_film', FILTER_SANITIZE_NUMBER_INT);
         $id_acteur = filter_input(INPUT_POST, 'id_acteur', FILTER_SANITIZE_NUMBER_INT);
+        $id_role=filter_input(INPUT_POST, 'id_role', FILTER_SANITIZE_NUMBER_INT);
 
-        if (isset($_POST['id_film']) && isset($_POST['id_acteur'])) {
+        if($id_film && $id_acteur && $id_role){
             $id_film = $_POST['id_film'];
             $id_acteur = $_POST['id_acteur'];
+            $id_role = $_POST['id_role'];
 
-            $castingInfo = $bddCinema->prepare("INSERT INTO jouer (id_film, id_acteur) VALUES (:id_film, :id_acteur)");
-            $castingInfo->execute([':id_film' => $id_film, ':id_acteur' => $id_acteur]);
+            $castingInfo = $bddCinema->prepare("INSERT INTO jouer (id_film, id_acteur,id_role) VALUES (:id_film, :id_acteur, :id_role)");
+            $castingInfo->execute([':id_film' => $id_film, ':id_acteur' => $id_acteur,':id_role' => $id_role]);
 
-            header('Location: index.php?action=filmPage&id_film='.$id_film);;
+            header('Location: index.php?action=filmPage&id='.$id_film);
         }   else {
             echo "Erreur".var_dump($_POST);
         }
     }
+
+    public function deleteActorFromCasting(){
+        $bddCinema=Connect::seConnecter();
+        $id_casting = filter_input(INPUT_POST, 'id_acteur', FILTER_SANITIZE_NUMBER_INT);
+        $id_film = filter_input(INPUT_POST, 'id_film', FILTER_SANITIZE_NUMBER_INT);
+
+        if (isset($_POST['id_acteur']) && isset($_POST['id_film'])) {
+            $id_casting = $_POST['id_acteur'];
+            $id_film = $_POST['id_film'];
+
+            $deleteFromCasting = $bddCinema->prepare("DELETE FROM jouer WHERE id_acteur = :id_acteur");
+            $deleteFromCasting->execute([':id_acteur' => $id_casting]);
+        }else {
+            echo "Erreur".var_dump($_POST);
+        }
+
+        header('Location: index.php?action=filmPage&id='.$id_film);
+    } 
+
+    public function deleteProducer(){
+        $bddCinema=Connect::seConnecter();
+        $id_producer = filter_input(INPUT_POST, 'id_realisateur', FILTER_SANITIZE_NUMBER_INT);
+        if (isset($_POST['id_realisateur'])) {
+            $id_producer = $_POST['id_realisateur'];
+
+            $deleteFromProducerFilm = $bddCinema->prepare("DELETE FROM realisateur WHERE id_realisateur = :id_realisateur");
+            $deleteFromProducerFilm->execute([':id_realisateur' => $id_producer]);
+
+            header( 'location: index.php?action=producerDeletePage' );
+        }
+    } 
 }
 ?>  
 

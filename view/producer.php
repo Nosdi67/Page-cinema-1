@@ -2,17 +2,18 @@
 session_start();
 ob_start();
 $producers=$producersInfo->fetch();
-$films=$producersInfo3->fetch();
 $actorFilms=$producersInfo2->fetchAll();
 $title='DOMOVIES';
 // var_dump($actorFilms);die;
+
+$img = !empty($producers['img']) ? $producers['img'] :"image\image utilisteur.png";
 ?>
 
 <main>
     <section id="actorBioSection">
         <div class="actorBio">
             <div class="actorBioImg">
-                <img src="<?php echo $producers['img'];?>" alt="Image de <?php echo $producers['prenom']. ' '.$producers['nom']; ?>"/>
+                <img src="<?php echo $img;?>" alt="Image de <?php echo $producers['prenom']. ' '.$producers['nom']; ?>"/>
             </div>
             <p><?php echo $producers['prenom'].' '.$producers['nom']; ?></p>
             <p>Nee le <?php echo $producers['naissance']; ?></p>
@@ -25,7 +26,7 @@ $title='DOMOVIES';
         </div>
     </section>
     <section id="actorFilmSection">
-        <header class="filmSectionHeader">Les films realisés par <?php echo $films['prenom'].' '.$films['nom']; ?></header>
+        <header class="filmSectionHeader">Les films realisés par <?php echo $producers['prenom'].' '.$producers['nom']; ?></header>
         <?php foreach ($actorFilms as $actorFilm): ?>
         <div class="actorMovieCards">
             <div class="MovieCardImg">
@@ -36,6 +37,15 @@ $title='DOMOVIES';
             </div>
       </div>
       <?php endforeach; ?>
+    </section>
+
+    <section>
+            <div class="deleteForm">
+            <form  method="POST" action="index.php?action=deleteProducer">
+                <input type="hidden" name="id_realisateur" value="<?php echo $producers['id_realisateur']; ?>">
+                <input type="submit" value="Delete producer <?php echo $producers['prenom'].' '.$producers['nom'];?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet acteur ?');">
+            </form>
+            </div>
     </section>
 </main>
 
