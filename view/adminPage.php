@@ -4,7 +4,6 @@ ob_start();
 $title='DOMOVIES-Genres';
 $genres = $genreList->fetchAll();
 $realisateurs = $realisateurList->fetchAll();
-// var_dump($realisateurs);die;
 ?>
 
 <main>
@@ -17,7 +16,7 @@ $realisateurs = $realisateurList->fetchAll();
    <!-- ------------------Acteur Form--------------------- -->
    <section>
       <div class="acteurForm" style="display: none;">
-         <form action="index.php?action=adminPageActorPost" method="POST">
+         <form action="index.php?action=adminPageActorPost" method="POST" enctype="multipart/form-data">
             <fieldset>
                <legend>Informations de l'Acteur</legend>
 

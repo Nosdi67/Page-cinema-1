@@ -59,7 +59,7 @@ $castingList=$filmCasting->fetchAll(PDO::FETCH_ASSOC);
          <?php } ?>
       </div>
    </section>
-   <section>
+   <section class="deleteFormSection">
       <form method="POST" action="index.php?action=deleteFilm">
          <input type="hidden" name="id_film" value="<?php echo $filmDetails['id_film']; ?>">
          <input type="submit" value="Supprimer Le film <?php echo $filmDetails['nom_film'];?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce film ?');">
@@ -67,7 +67,7 @@ $castingList=$filmCasting->fetchAll(PDO::FETCH_ASSOC);
    </section>
    <section>
       <div class="actorsDiv">
-         <header class="actorDivHeader"></header>
+         <header class="actorDivHeader">Casting</header>
          <?php foreach ($actors as $actor): ?>      
          <div class="actorCard">
             <div class="actorCardImg">
@@ -80,7 +80,7 @@ $castingList=$filmCasting->fetchAll(PDO::FETCH_ASSOC);
                <form action="index.php?action=deleteActorFromCasting" method="post">
                   <input type="hidden" name="id_acteur" value="<?php echo $actor['id_acteur'] ?>">
                   <input type="hidden" name="id_film" value="<?php echo $actor['id_film'] ?>">
-                  <button type="submit"><i class="fa-solid fa-trash"></i></button>
+                  <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer <?php echo $actor['prenom']. ' '.$actor['nom']; ?> ?');"><i class="fa-solid fa-trash"></i></button>
                </form>
             </div>
          </div>
@@ -88,7 +88,7 @@ $castingList=$filmCasting->fetchAll(PDO::FETCH_ASSOC);
       </div>
    </section>
    <section id="formSection">
-      <button id=addActorbtn>Ajouter un Acteur au casting</button>  
+      <button id=addActorBtn>Ajouter un Acteur au casting</button>  
       <div id="addActor" style="display: none;">
          <form method="post" action="index.php?action=addCastingActor">
             <label for="film">Choisir un film:</label>
@@ -122,7 +122,7 @@ $castingList=$filmCasting->fetchAll(PDO::FETCH_ASSOC);
 </main>
 
 <script>
-document.getElementById('addActorbtn').addEventListener('click', function(){
+document.getElementById('addActorBtn').addEventListener('click', function(){
 
         if(document.getElementById('addActor').style.display === 'none'){
             document.getElementById('addActor').style.display = 'block';
@@ -130,7 +130,6 @@ document.getElementById('addActorbtn').addEventListener('click', function(){
             document.getElementById('addActor').style.display = 'none';
         }
 }); 
-
 </script>
 
 <?php

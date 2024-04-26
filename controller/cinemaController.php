@@ -150,17 +150,6 @@ class CinemaController{
         
         $producersInfo->execute([':id' => $id]);
 
-        // if (!isset($_POST['img']) || $_POST['img'] === NULL){
-        //     $img="image\image utilisteur.png";
-            
-        // }else{
-        //     $img=$_POST['img'];
-            
-        // }
-        // if(empty($_POST['img']) || $_POST['img'] === NULL){
-        //     $producerImg=$bddCinema->prepare("INSERT INTO realisateur (img) VALUES (:img)");
-        //     $producerImg->execute([':img'=>'image\image utilisteur.png']);
-        // }
         $producersInfo2=$bddCinema->prepare("SELECT nom_film,id_film,film_cover
                                             FROM film f
                                             INNER JOIN realisateur r ON r.id_realisateur = f.id_realisateur
@@ -180,44 +169,59 @@ class CinemaController{
         $genreList = $bddCinema->prepare("SELECT * FROM genre");
         $genreList->execute();
         
-    
-        
-        require "view/adminPage.php";
+       require "view/adminPage.php";
     }
     
-    public function adminPageActorPost(){
-        
-        $bddCinema=Connect::seConnecter();
 
-        if(isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['sexe']) && isset($_POST['naissance']) && isset($_POST['img']) && isset($_POST['role'])){
-            $nom=filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $prenom=filter_input(INPUT_POST, 'prenom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $sexe=filter_input(INPUT_POST,'sexe', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $naissance=filter_input(INPUT_POST, 'naissance', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $img=filter_input(INPUT_POST, 'img', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-            $role=$_POST['role'];
+        public function adminPageActorPost() {
+            $bddCinema = Connect::seConnecter();
+            var_dump($_POST, $_FILES);
+        
+            if (isset($_POST['nom'], $_POST['prenom'], $_POST['sexe'], $_POST['naissance'], $_POST['role'])&& isset($_FILES['img'])) {
+                $nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $prenom = filter_input(INPUT_POST, 'prenom', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $sexe = filter_input(INPUT_POST, 'sexe', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $naissance = filter_input(INPUT_POST, 'naissance', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+                $role = $_POST['role'];
+                $img = $_FILES['img']['name'];
+        
+                $uploadDir = 'image\image_acteur';
+                $defaultImg = 'image\image_utilisteur.png'; 
+        
+                if ($_FILES['img']['error'] == 0) {
+                    $imgName = $_FILES['img']['name'];
+                    $destination = $uploadDir . $imgName;
+                    if (move_uploaded_file($_FILES['img']['tmp_name'], $destination)) {
+                        $img = $destination;
+                    } else {
+                        $img = $defaultImg;
+                    }
+                } elseif ($_FILES['img']['error'] == UPLOAD_ERR_NO_FILE) {
+                    $img = $defaultImg;
+                } else {
+                    $img = $defaultImg;
+                }
+                
+                $personneInfo = $bddCinema->prepare("INSERT INTO personne (nom, prenom, sexe, naissance, img)
+                                                     VALUES (:nom, :prenom, :sexe, :naissance, :img)");
+                $personneInfo->execute([':nom' => $nom, ':prenom' => $prenom, ':sexe' => $sexe, ':naissance' => $naissance, ':img' => $img]);
+        
+                $id_personne = $bddCinema->lastInsertId();
+        
+                if ($role === "acteur") {
+                    $personneInfo = $bddCinema->prepare("INSERT INTO acteur (id_personne) VALUES (:id_personne)");
+                    $personneInfo->execute([':id_personne' => $id_personne]);
+                } else if ($role === "realisateur") {
+                    $personneInfo = $bddCinema->prepare("INSERT INTO realisateur (id_personne) VALUES (:id_personne)");
+                    $personneInfo->execute([':id_personne' => $id_personne]);
+                }
+                
+                header('Location: index.php?action=adminPage');
+                exit; 
+            }
             
-        $personneInfo=$bddCinema->prepare("INSERT INTO personne (nom,prenom,sexe,naissance,img)
-                                        VALUES (:nom,:prenom,:sexe,:naissance,:img)");
-        
-        
-        $personneInfo->execute([':nom' => $nom, ':prenom' => $prenom, ':sexe' => $sexe, ':naissance' => $naissance, ':img' => $img]);  
-        
-        $id_personne=$bddCinema->lastInsertId();
-        
-        if($role == "acteur"){
-            $personneInfo=$bddCinema->prepare("INSERT INTO acteur (id_personne)
-                                                VALUES (:id_personne)");
-            $personneInfo->execute([':id_personne' => $id_personne]);
-        } else if ($role == "realisateur"){
-           $personneInfo=$bddCinema->prepare("INSERT INTO realisateur (id_personne)
-                                                VALUES (:id_personne)");
-            $personneInfo->execute([':id_personne' => $id_personne]);
         }
-    }
-    header('location:index.php?action=adminPage');
-       
-    }
+        
 
     public function adminPageFilmPost(){
         $bddCinema=Connect::seConnecter();

@@ -39,7 +39,7 @@
       <?php endforeach; ?>
     </section>
 
-    <section>
+    <section class="deleteFormSection">
             <div class="deleteForm">
             <?php foreach ($actors as $actor): ?>
             <form  method="POST" action="index.php?action=deleteActor">
