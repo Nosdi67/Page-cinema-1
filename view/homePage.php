@@ -20,8 +20,13 @@
             <div class="seeMoreBtnDiv">
                <a class="seeMoreBtn" href="index.php?action=filmPage&id=<?php echo $film['id_film']; ?>">See More</a>
             </div>
+            <div class="slide-img-div">
             <img class="slide-img" src="<?php echo $film['film_back_img']; ?>">
+            
+            <div class="slide-img-div">
             <img class="slide-title-img" src="<?php echo $film['film_title_img']; ?>">
+            </div>
+            
             <div class="overlay">
                <div>
                   <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -108,36 +113,38 @@
      showSlides(slideIndex = n-1);// On passe l'index de la slide cliquée
    }
 </script>
-<script>//Background JS
-   function extractDominantColor(imageURL) {
-       var img = new Image();
-       img.crossOrigin = "Anonymous";
-   
-       img.onload = function() {
-           var canvas = document.createElement('canvas');
-           canvas.width = 1;
-           canvas.height = 1;
-           var ctx = canvas.getContext('2d');
-           ctx.drawImage(img, 0, 0, 1, 1);
-   
-           var pixelData = ctx.getImageData(0, 0, 1, 1).data;
-           var color = 'rgb(' + pixelData[0] + ', ' + pixelData[1] + ', ' + pixelData[2] + ')';
-           
-           // Définir le dégradé linéaire avec la couleur dominante
-           var gradientBg = "linear-gradient(to bottom, " + color + ", #000000)";
-           
-           // Appliquer le dégradé linéaire à l'arrière-plan de l'élément parent avec l'ID "wrapper"
-           document.querySelector('#wrapper').style.background = gradientBg;//gradientBg sert au dégradé linéaire
-       };
-   
-       img.src = imageURL;
-       
-   }
-   // <?php foreach ($films as $film): ?>
-   // Appeler la fonction avec l'URL de l'image de fond depuis PHP
-   extractDominantColor("<?php echo $film['film_back_img']; ?>");// faut explode ici et rajouter "\" au chemin.
-   // <?php endforeach; ?>
+
+
+<script>
+// Fonction pour extraire et appliquer la couleur dominante
+function extractDominantColor(imageElement, wrapper) {
+    imageElement.onload = function() {
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        canvas.width = imageElement.width;
+        canvas.height = imageElement.height;
+        ctx.drawImage(imageElement, 0, 0, canvas.width, canvas.height);
+
+        var pixelData = ctx.getImageData(0, 0, 1, 1).data;
+        var color = `rgb(${pixelData[0]}, ${pixelData[1]}, ${pixelData[2]})`;
+        var gradientBg = `linear-gradient(to bottom, ${color}, #000)`;
+
+        wrapper.style.background = gradientBg;
+    };
+
+    imageElement.crossOrigin = "Anonymous";
+    imageElement.src = imageElement.getAttribute('data-src');
+}
+
+// Exécution de la fonction pour chaque image
+<?php foreach ($films as $film): ?>
+    var img = new Image();
+    img.setAttribute('data-src', '<?php echo $film['film_back_img']; ?>');
+    extractDominantColor(img, document.getElementById('wrapper'));
+<?php endforeach; ?>
 </script>
+
+
 <script>//Upcoming Movies Slides JS
    function plusUpcomingSlides(n) {
        // Récupérer toutes les diapositives de la section "Upcoming Movies"

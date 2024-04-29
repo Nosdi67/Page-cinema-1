@@ -1257,14 +1257,18 @@ select{
     cursor: pointer;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 770px) {
     nav {
         flex-direction: row;
         align-items: flex-start;
+        justify-content: center;
+    }
+    body{
+        background-color: #D3D3D3;
     }
 
     nav ul {
-        flex-direction: column;
+        flex-direction: row;
         padding: 0;
     }
 
@@ -1314,13 +1318,22 @@ select{
     object-position: center;
     }
     .slide-img-cover{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: -20px;
-    border-radius: 5px;
-    object-fit: cover;
-    z-index: -1;
+        width: 25%;
+        height: 9%;
+        position: relative;
     }
+    .slide-title-img {
+        position: relative;
+        top: 15px;
+        left: 206px;
+        z-index: 1;
+        width: 35%;
+        height: auto;
+    }
+    .slide-img-div{
+       top: 0px;
+    position: absolute;
+    height: 100%;
+    width: 100%;
 }
+    }
