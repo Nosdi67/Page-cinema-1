@@ -2,7 +2,7 @@
 use Controller\CinemaController;
 
 spl_autoload_register(function ($className){
-    include $className. '.php';
+   require str_replace("\\",DIRECTORY_SEPARATOR, $className). '.php';
 });
 
 $ctrlCinema = new CinemaController();
@@ -31,5 +31,6 @@ if (isset($_GET["action"])) {
         case "addCastingActor":$ctrlCinema->addCastingActor();break;
         case "deleteActorFromCasting":$ctrlCinema->deleteActorFromCasting();break;
         case "deleteProducer":$ctrlCinema->deleteProducer();break;
+        
     }}
 ?>

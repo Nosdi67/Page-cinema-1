@@ -351,6 +351,7 @@ class CinemaController{
             $deleteFromProducerFilm->execute([':id_realisateur' => $id_producer]);
 
             header( 'location: index.php?action=producerDeletePage' );
+            exit();
         }
     } 
 }
