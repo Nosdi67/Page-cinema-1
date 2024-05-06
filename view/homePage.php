@@ -1,5 +1,4 @@
 <?php
-   session_start();
    ob_start();
    $films = $query->fetchAll();
    $upcomingFilms = $query2->fetchAll();
@@ -20,12 +19,12 @@
             <div class="seeMoreBtnDiv">
                <a class="seeMoreBtn" href="index.php?action=filmPage&id=<?php echo $film['id_film']; ?>">See More</a>
             </div>
-            <div class="slide-img-div">
+            <!-- <div class="slide-img-div"> -->
             <img class="slide-img" src="<?php echo $film['film_back_img']; ?>">
             
-            <div class="slide-img-div">
+            <!-- <div class="slide-img-div"> -->
             <img class="slide-title-img" src="<?php echo $film['film_title_img']; ?>">
-            </div>
+            <!-- </div> -->
             
             <div class="overlay">
                <div>

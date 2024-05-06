@@ -1,5 +1,4 @@
 <?php
-session_start();
 ob_start();
 $producers=$producersInfo->fetch();
 $actorFilms=$producersInfo2->fetchAll();

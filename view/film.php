@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 ob_start();
 $title = 'DOMOVIES-';
 $genres = $queryGenre->fetchAll(PDO::FETCH_ASSOC);

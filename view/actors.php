@@ -1,5 +1,5 @@
 <?php
- session_start();
+
  ob_start();
  $actors=$actorRequete->fetchAll();
  $title='DOMOVIES-Actors';

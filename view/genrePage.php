@@ -1,5 +1,5 @@
 <?php
- session_start();
+ 
  ob_start();
  $genres=$genreRequete->fetchAll();
  $title='DOMOVIES-Genres';

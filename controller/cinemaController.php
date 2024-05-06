@@ -256,6 +256,7 @@ class CinemaController{
             }
                             
             header('location:index.php?action=adminPage');
+            exit();
         }
 
     }
@@ -275,6 +276,7 @@ class CinemaController{
         
 
         header('location:index.php?action=filmDeletePage');
+        exit();
        
         }
     } 
@@ -295,6 +297,7 @@ class CinemaController{
 
         
             header('Location: index.php?action=actorDeletePage');
+            exit();
     } else {
         echo "Erreur".var_dump($_POST);
     }
@@ -318,6 +321,7 @@ class CinemaController{
             $castingInfo->execute([':id_film' => $id_film, ':id_acteur' => $id_acteur,':id_role' => $id_role]);
 
             header('Location: index.php?action=filmPage&id='.$id_film);
+            exit();
         }   else {
             echo "Erreur".var_dump($_POST);
         }
@@ -339,6 +343,7 @@ class CinemaController{
         }
 
         header('Location: index.php?action=filmPage&id='.$id_film);
+        exit();
     } 
 
     public function deleteProducer(){
