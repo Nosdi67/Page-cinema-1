@@ -2,19 +2,20 @@
 
 namespace Controller;
 use Model\Connect;
-use PDO;
+
 
 class CinemaController{
 
     public function homePage(){
         $bddCinema=Connect::seConnecter();
-        $query=$bddCinema->query("SELECT film.nom_film,film_back_img,synopsis,film_cover,film_title_img,id_film,
+        $query=$bddCinema->prepare("SELECT film.nom_film,film_back_img,synopsis,film_cover,film_title_img,id_film,
                         CONCAT(FLOOR(film.duree/ 60), ' Heures et ', MOD(film.duree, 60),'minutes') AS temps_convert
                         FROM film
                         INNER JOIN realisateur ON film.id_realisateur = realisateur.id_realisateur");
-        $query2=$bddCinema->query("SELECT nom_film,synopsis,film_cover
-                                FROM filmavenir");
-
+        $query->execute();
+        $query2=$bddCinema->prepare("SELECT nom_film,synopsis,film_cover
+                                     FROM filmavenir");
+        $query2->execute( );
         require "view/homePage.php";
     }
     public function allMovies(){
